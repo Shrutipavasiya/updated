@@ -48,13 +48,15 @@ def contact(request):
         email_subject = 'You have a new message from Carzone website regarding ' + subject
         message_body = 'Name: ' + name + '. Email: ' + email + '. Phone: ' + phone + '. Message: ' + message
 
-        admin_info = User.objects.get(is_superuser=True)
-        admin_email = admin_info.email
+        admin_info = User.objects.filter(is_superuser=True)
+        admin_emails = []
+        for i in admin_info:
+            admin_emails.append(i.email)
         send_mail(
                 email_subject,
                 message_body,
-                'rathan.kumar049@gmail.com',
-                [admin_email],
+                'heerpatel5252@gmail.com',
+                admin_emails,
                 fail_silently=False,
             )
         messages.success(request, 'Thank you for contacting us. We will get back to you shortly')

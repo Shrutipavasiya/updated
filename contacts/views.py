@@ -32,13 +32,15 @@ def inquiry(request):
         first_name=first_name, last_name=last_name, customer_need=customer_need, city=city,
         state=state, email=email, phone=phone, message=message)
 
-        admin_info = User.objects.get(is_superuser=True)
-        admin_email = admin_info.email
+        admin_info = User.objects.filter(is_superuser=True)
+        admin_emails = []
+        for i in admin_info:
+            admin_emails.append(i.email)
         send_mail(
                 'New Car Inquiry',
                 'You have a new inquiry for the car ' + car_title + '. Please login to your admin panel for more info.',
-                'rathan.kumar049@gmail.com',
-                [admin_email],
+                'heerpatel5252@gmail.com',
+                admin_emails,
                 fail_silently=False,
             )
 
